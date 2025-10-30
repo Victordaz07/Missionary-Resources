@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "default": "missionary-resources"
+  },
+  "targets": {
+    "missionary-resources": {
+      "hosting": {
+        "recurso-misional": [
+          "recurso-misional"
+        ]
+      }
+    }
+  }
+}
+
+

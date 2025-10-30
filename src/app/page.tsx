@@ -5,6 +5,7 @@ import { CONTENT } from "../lib/lessons";
 import SearchBar from "../components/SearchBar";
 import FavoriteButton from "../components/FavoriteButton";
 import { isFavorite } from "../lib/favorites";
+import TagChips from "../components/TagChips";
 import { useMemo, useState } from "react";
 
 const lessons = [
@@ -18,14 +19,30 @@ const lessons = [
 export default function Home() {
   const [q, setQ] = useState("");
   const [favOnly, setFavOnly] = useState(false);
+  const allTags = useMemo(() => {
+    const t = new Set<string>();
+    lessons.forEach((l) => {
+      const tags = (CONTENT as any)[l.id]?.es?.tags || [];
+      tags.forEach((x: string) => t.add(x));
+    });
+    return Array.from(t).sort();
+  }, []);
+  const [active, setActive] = useState<Set<string>>(new Set());
   const list = useMemo(() => {
     const term = q.toLowerCase();
     return lessons.filter((l) => {
       if (favOnly && !isFavorite(l.id)) return false;
       const one = (CONTENT as any)[l.id]?.es?.oneLiner || "";
-      return !term || `${l.title} ${one}`.toLowerCase().includes(term);
+      const tags: string[] = (CONTENT as any)[l.id]?.es?.tags || [];
+      if (active.size > 0 && !tags.some((t) => active.has(t))) return false;
+      return !term || `${l.title} ${one} ${tags.join(" ")}`.toLowerCase().includes(term);
     });
-  }, [q, favOnly]);
+  }, [q, favOnly, active]);
+  const toggleTag = (t: string) => {
+    const n = new Set(active);
+    n.has(t) ? n.delete(t) : n.add(t);
+    setActive(n);
+  };
   return (
     <div className="space-y-6">
       <header className="rounded-2xl bg-gradient-to-b from-white via-emerald-50 to-white p-8 shadow-soft">
@@ -41,6 +58,7 @@ export default function Home() {
         <SearchBar onChange={setQ} />
         <button onClick={() => setFavOnly((v) => !v)} className={`rounded-xl border px-3 py-2 text-sm ${favOnly ? "bg-emerald-600 text-white" : "bg-white hover:bg-slate-50"}`}>★ Favoritos</button>
       </div>
+      <TagChips tags={allTags} active={active} onToggle={toggleTag} />
       <section className="grid gap-4 sm:grid-cols-2">
         {list.map((l) => (
           <Link key={l.id} href={`/l/${l.id}?lang=es`} className="block rounded-2xl border bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">

@@ -11,6 +11,7 @@ export type LessonContent = {
   title: string;
   objective: string;
   oneLiner: string;
+  tags?: string[];
   scriptures: { ref: string; text: string }[];
   outline: { title: string; bullets: string[]; icon?: string }[];
   media: { label: string; url: string; kind: "video" | "pdf" | "link" }[];
@@ -25,6 +26,7 @@ export const CONTENT: Record<LessonId, Record<Lang, LessonContent>> = {
       title: "Plan de Salvación",
       objective: "Enseñar el propósito de la vida, el papel central de Jesucristo y el camino de vuelta a Dios.",
       oneLiner: "Dios tiene un plan perfecto de felicidad; por Cristo hallamos propósito, paz y vida eterna.",
+      tags: ["plan", "propósito", "Cristo", "vida eterna"],
       scriptures: [
         { ref: "Juan 3:16", text: "De tal manera amó Dios al mundo…" },
         { ref: "Moisés 1:39", text: "La obra y la gloria de Dios: vida eterna del hombre." },
@@ -115,6 +117,7 @@ export const CONTENT: Record<LessonId, Record<Lang, LessonContent>> = {
       title: "La Restauración del Evangelio de Jesucristo",
       objective: "Explicar que Dios llama profetas y que por medio de José Smith restauró Su Iglesia y autoridad.",
       oneLiner: "Dios ha hablado de nuevo mediante un profeta; la Iglesia de Cristo está otra vez en la tierra.",
+      tags: ["restauración", "profeta", "José Smith", "Iglesia"],
       scriptures: [
         { ref: "Efesios 4:11–14", text: "Profetas y apóstoles para perfeccionar a los santos." },
         { ref: "Santiago 1:5", text: "Si alguno tiene falta de sabiduría, pídala a Dios." },
@@ -205,6 +208,7 @@ export const CONTENT: Record<LessonId, Record<Lang, LessonContent>> = {
       title: "El Evangelio de Jesucristo",
       objective: "Invitar a ejercer fe en Cristo, arrepentirse, bautizarse, recibir el Espíritu Santo y perseverar.",
       oneLiner: "El evangelio es el camino de fe, arrepentimiento, convenios y perseverar hasta el fin.",
+      tags: ["evangelio", "fe", "arrepentimiento", "bautismo"],
       scriptures: [
         { ref: "2 Nefi 31:20", text: "Perseverad con firmeza en Cristo." },
         { ref: "Hechos 2:38", text: "Arrepentíos y bautícese cada uno…" },
@@ -295,6 +299,7 @@ export const CONTENT: Record<LessonId, Record<Lang, LessonContent>> = {
       title: "Los Mandamientos",
       objective: "Presentar mandamientos clave que nos acercan a Cristo y bendicen la vida diaria.",
       oneLiner: "Guardar mandamientos trae luz, protección y poder para seguir a Cristo.",
+      tags: ["mandamientos", "obediencia", "día de reposo", "diezmo"],
       scriptures: [
         { ref: "Juan 14:15", text: "Si me amáis, guardad mis mandamientos." },
         { ref: "DyC 130:20–21", text: "Ley irrevocable: bendiciones por obediencia." },
@@ -385,6 +390,7 @@ export const CONTENT: Record<LessonId, Record<Lang, LessonContent>> = {
       title: "Leyes y Ordenanzas",
       objective: "Enseñar la importancia del sacerdocio, las ordenanzas y la obra del templo y misional.",
       oneLiner: "Dios nos bendice mediante ordenanzas del sacerdocio para avanzar en el camino del convenio.",
+      tags: ["sacerdocio", "ordenanzas", "templo", "servicio"],
       scriptures: [
         { ref: "Hebreos 5:4", text: "Nadie toma para sí esta honra, sino el llamado por Dios." },
         { ref: "DyC 84:20", text: "En las ordenanzas se manifiesta el poder de la divindad." },
