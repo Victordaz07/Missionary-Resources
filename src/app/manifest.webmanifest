@@ -1,0 +1,11 @@
+{
+  "name": "Recurso Misional",
+  "short_name": "Misional",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#26a884",
+  "icons": []
+}
+
+

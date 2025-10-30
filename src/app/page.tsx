@@ -1,80 +1,36 @@
-"use client";
 import { Card } from "../components/Card";
-import { useI18n } from "../i18n/i18n";
-import { useEffect, useState } from "react";
-import { fetchResources, type Resource } from "../lib/resources";
-import { isFirebaseConfigured } from "../lib/firebase";
+import Link from "next/link";
+import { CONTENT } from "../lib/lessons";
+
+const lessons = [
+  { id: "restoration", title: "La Restauración" },
+  { id: "plan-of-salvation", title: "Plan de Salvación" },
+  { id: "gospel-of-jesus-christ", title: "Evangelio de Jesucristo" },
+  { id: "commandments", title: "Mandamientos" },
+  { id: "laws-and-ordinances", title: "Leyes y Ordenanzas" },
+];
 
 export default function Home() {
-  const { t } = useI18n();
-  const [resources, setResources] = useState<Resource[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchResources()
-      .then((data) => setResources(data))
-      .catch((e) => setError(e?.message || "Error"));
-  }, []);
   return (
-    <div className="space-y-8">
-      {!isFirebaseConfigured() && (
-        <div className="rounded-md border border-amber-400 bg-amber-50 px-4 py-2 text-amber-800 dark:border-amber-500/40 dark:bg-amber-950/30 dark:text-amber-300">
-          Estás en modo local (sin Firebase). Se muestran datos de ejemplo.
+    <div className="space-y-6">
+      <header className="rounded-2xl bg-gradient-to-b from-white via-emerald-50 to-white p-8 shadow-soft">
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-3xl font-semibold text-slate-800">Recursos Misionales</h1>
+            <p className="mt-1 text-slate-700">Selecciona una lección para empezar.</p>
+          </div>
+          <a className="btn btn-primary" href="/l/restoration?lang=es">Comenzar ahora</a>
         </div>
-      )}
-      <section className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold tracking-tight">{t("summary")}</h1>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card title={t("resources")} subtitle="totales">
-            {resources ? `${resources.length}` : error ? "-" : "…"}
-          </Card>
-          <Card title={t("study")} subtitle="nuevos">7</Card>
-          <Card title={t("languages")} subtitle="actualizados">3</Card>
-          <Card title={t("favorites")} subtitle="tuyos">12</Card>
-        </div>
-      </section>
-
-      <section className="flex flex-col gap-2">
-        <h2 className="text-xl font-semibold tracking-tight">{t("explore")}</h2>
-        <div id="recursos" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              title: t("study"),
-              desc: t("studyDesc"),
-            },
-            {
-              title: t("languages"),
-              desc: t("languagesDesc"),
-            },
-            {
-              title: t("tools"),
-              desc: t("toolsDesc"),
-            },
-            {
-              title: t("health"),
-              desc: t("healthDesc"),
-            },
-            {
-              title: t("culture"),
-              desc: t("cultureDesc"),
-            },
-            {
-              title: t("admin"),
-              desc: t("adminDesc"),
-            },
-          ].map((card) => (
-            <Card key={card.title} title={card.title} href="#">
-              {card.desc}
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      <section id="contacto" className="mx-auto max-w-3xl">
-        <h2 className="text-xl font-semibold">{t("contact")}</h2>
-        <p className="mt-2 text-sm text-foreground/70">
-          ¿Tienes un recurso para sugerir? Envíanos tus ideas y enlaces.
-        </p>
+      </header>
+      <section className="grid gap-4 sm:grid-cols-2">
+        {lessons.map((l) => (
+          <Link key={l.id} href={`/l/${l.id}?lang=es`} className="block rounded-2xl border bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">
+            <div className="mb-1 text-xs uppercase tracking-wide text-slate-500">Lección</div>
+            <div className="text-lg font-semibold">{l.title}</div>
+            <div className="mt-2 text-sm text-slate-600">{(CONTENT as any)[l.id]?.es?.oneLiner || (CONTENT as any)[l.id]?.es?.keyLine || ""}</div>
+            <div className="mt-3 text-brand-700 text-sm font-medium">Abrir →</div>
+          </Link>
+        ))}
       </section>
     </div>
   );
