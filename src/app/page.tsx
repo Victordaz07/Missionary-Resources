@@ -3,6 +3,7 @@ import { Card } from "../components/Card";
 import { useI18n } from "../i18n/i18n";
 import { useEffect, useState } from "react";
 import { fetchResources, type Resource } from "../lib/resources";
+import { isFirebaseConfigured } from "../lib/firebase";
 
 export default function Home() {
   const { t } = useI18n();
@@ -16,6 +17,11 @@ export default function Home() {
   }, []);
   return (
     <div className="space-y-8">
+      {!isFirebaseConfigured() && (
+        <div className="rounded-md border border-amber-400 bg-amber-50 px-4 py-2 text-amber-800 dark:border-amber-500/40 dark:bg-amber-950/30 dark:text-amber-300">
+          Estás en modo local (sin Firebase). Se muestran datos de ejemplo.
+        </div>
+      )}
       <section className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold tracking-tight">{t("summary")}</h1>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

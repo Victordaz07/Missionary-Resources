@@ -11,6 +11,15 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+export function isFirebaseConfigured(): boolean {
+  return Boolean(
+    firebaseConfig.apiKey &&
+      firebaseConfig.authDomain &&
+      firebaseConfig.projectId &&
+      firebaseConfig.appId
+  );
+}
+
 export function getFirebaseApp(): FirebaseApp {
   if (!getApps().length) {
     return initializeApp(firebaseConfig);
